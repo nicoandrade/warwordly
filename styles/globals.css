@@ -1,0 +1,89 @@
+@tailwind base;
+
+body {
+    @apply text-gray-500;
+}
+
+/* Default styles for inputs */
+[type="text"],
+[type="email"],
+[type="url"],
+[type="password"],
+[type="number"],
+[type="date"],
+[type="datetime-local"],
+[type="month"],
+[type="search"],
+[type="tel"],
+[type="time"],
+[type="week"],
+[multiple],
+textarea,
+select {
+    @apply block;
+    @apply w-full;
+    @apply rounded-lg;
+    @apply bg-white;
+    @apply border-gray-200;
+    @apply border-2;
+    @apply py-3;
+    @apply shadow-none;
+    @apply text-gray-600;
+    @apply focus:border-transparent;
+    @apply focus:ring-2;
+    @apply focus:ring-indigo-600 placeholder-gray-300;
+}
+
+@tailwind components;
+
+.btn {
+    @apply inline-flex items-center bg-gray-200 justify-center font-bold py-3 px-7 rounded-lg  text-gray-500 text-sm tracking-wide;
+    @apply transition duration-150 ease-out transform;
+    @apply hover:bg-gray-300 hover:text-gray-700;
+    @apply focus:ring-offset-2 focus:ring-2 focus:ring-indigo-600 focus:border-transparent;
+}
+
+.btn-white {
+    @apply bg-white text-gray-500 shadow-md;
+    @apply hover:bg-gray-50 hover:text-gray-700 hover:shadow-lg;
+    @apply focus:ring-offset-2 focus:ring-2 focus:ring-indigo-600 focus:border-transparent;
+}
+
+.btn-normal-hero {
+    @apply text-white;
+    @apply bg-hero;
+    @apply hover:text-white;
+    @apply hover:bg-hero-darker;
+}
+
+.btn-hero {
+    @apply py-3;
+    @apply px-8 sm:px-11;
+    @apply text-lg;
+    @apply text-white;
+    @apply w-full;
+    @apply bg-hero;
+    @apply hover:text-white;
+    @apply hover:bg-hero-darker;
+}
+
+@tailwind utilities;
+
+.cell-animation {
+    animation: revealCharCell linear;
+    animation-duration: 0.15s;
+}
+
+@keyframes revealCharCell {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
