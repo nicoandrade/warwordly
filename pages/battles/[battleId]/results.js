@@ -125,6 +125,7 @@ export default function BattleResults({ battle }) {
                         },
                     ],
                     site_name: "WarWordly",
+                    url: battleURL,
                 }}
             />
 
