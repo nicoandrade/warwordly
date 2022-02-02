@@ -107,6 +107,7 @@ export default function ShareBattle({ battleId, imageURL }) {
                                         className="btn w-full sm:w-auto"
                                         href={imageURL}
                                         target="_blank"
+                                        rel="noreferrer"
                                         download="battle.jpg"
                                     >
                                         <PhotographIcon className="w-6 h-6 mr-3" />
