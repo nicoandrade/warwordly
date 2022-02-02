@@ -39,11 +39,15 @@ export default function ShareBattle({ battleId, imageURL }) {
                 </li>
                 <li>
                     <a
-                        href="#"
+                        href={imageURL}
                         onClick={(e) => {
                             e.preventDefault();
                             setIsOpenModal(true);
                         }}
+                        // onMouseEnter={() => {
+                        //     const img = new Image();
+                        //     img.src = imageURL;
+                        // }}
                         className="inline-flex items-center justify-center p-5 bg-gray-100 hover:bg-gray-200 rounded-full text-blue-500"
                     >
                         <PhotographIcon className="w-6 h-6" />
@@ -97,7 +101,8 @@ export default function ShareBattle({ battleId, imageURL }) {
                                     <img
                                         src={imageURL}
                                         alt="Share image"
-                                        className="block w-full rounded-lg overflow-hidden shadow-md mb-6"
+                                        className="block w-full rounded-lg overflow-hidden shadow-md mb-6 loading"
+                                        style={{ minHeight: 150 }}
                                         ref={modalRef}
                                     />
                                 )}
