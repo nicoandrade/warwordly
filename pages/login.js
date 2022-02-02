@@ -41,7 +41,7 @@ export default function Login() {
         });
 
         try {
-            const { user, error } = await signIn(
+            const { error } = await signIn(
                 {
                     email: email,
                 },

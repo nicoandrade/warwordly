@@ -11,7 +11,7 @@ const ButtonSubmit = ({
             className={`${className} ${loading ? "pointer-events-none" : ""}`}
             disabled={loading ? true : false}
         >
-            {loading ? <Spin className="h-6 w-6 text-white" /> : text}
+            {loading ? <Spin className="h-7 w-7 text-white" /> : text}
         </button>
     );
 };

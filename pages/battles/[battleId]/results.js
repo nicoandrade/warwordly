@@ -7,8 +7,6 @@ import ResultsColumnSkeleton from "components/results/ResultsColumnSkeleton";
 
 import ResultsColumn from "components/results/ResultsColumn";
 
-import useBattle from "hooks/useBattle";
-
 import { useUser } from "hooks/authUser";
 
 import { getGuessStatuses } from "libs/statuses";
@@ -47,14 +45,82 @@ export default function BattleResults({ battle }) {
               )
             : [];
 
+    // Get who won
+    const winner = battle ? (battle.winner === battle.player1 ? 1 : 2) : null;
+
+    // Get the player's names
+    let p1Name = battle
+        ? battle.user1.display_name
+            ? battle.user1.display_name
+            : battle.user1.username
+            ? battle.user1.username
+            : "Player 1"
+        : "Player 1";
+
+    let p2Name = battle
+        ? battle.user2.display_name
+            ? battle.user2.display_name
+            : battle.user2.username
+            ? battle.user2.username
+            : "Player 2"
+        : "Player 2";
+
+    // Build the variable to pass to the Open Graph image
+    let grid1 = statuses1.map((row) => row.map((cell) => cell.charAt(0)));
+    if (battle && grid1.length < battle.amount_guesses) {
+        grid1.push(
+            ...[...Array(battle.amount_guesses - grid1.length)].map((row) =>
+                [...Array(battle.amount_letters)].map((cell) => "e")
+            )
+        );
+    }
+    let grid2 = statuses2.map((row) => row.map((cell) => cell.charAt(0)));
+    if (battle && grid2.length < battle.amount_guesses) {
+        grid2.push(
+            ...[...Array(battle.amount_guesses - grid2.length)].map((row) =>
+                [...Array(battle.amount_letters)].map((cell) => "e")
+            )
+        );
+    }
+
+    // Create the Open Graph image URL
+    let ogUrl = new URL(process.env.NEXT_PUBLIC_IMAGES_URL);
+    ogUrl.pathname = "api/battle";
+    if (battle) {
+        ogUrl.searchParams.append("grid1", JSON.stringify(grid1));
+        ogUrl.searchParams.append("grid2", JSON.stringify(grid2));
+        ogUrl.searchParams.append("p1", p1Name);
+        ogUrl.searchParams.append("p2", p2Name);
+        ogUrl.searchParams.append("winner", winner);
+    }
+
     return (
         <div>
             <NextSeo
                 title={
                     router.isFallback
-                        ? "Loading results... - WarWordly"
-                        : "Results - WarWordly"
+                        ? "Battle results - WarWordly"
+                        : `Battle results - WarWordly`
                 }
+                description={
+                    router.isFallback
+                        ? "Battle results"
+                        : `${p1Name} vs. ${p2Name}`
+                }
+                openGraph={{
+                    title: router.isFallback
+                        ? "Battle results - WarWordly"
+                        : `Battle results - WarWordly`,
+                    images: [
+                        {
+                            url: ogUrl,
+                            width: 1200,
+                            height: 630,
+                            alt: "Battle results",
+                        },
+                    ],
+                    site_name: "WarWordly",
+                }}
             />
 
             <Header />
@@ -75,7 +141,14 @@ export default function BattleResults({ battle }) {
                             statuses={statuses1}
                             amountLetters={battle ? battle.amount_letters : 5}
                             amountGuesses={battle ? battle.amount_guesses : 6}
-                            name={"Player 1"}
+                            name={
+                                user &&
+                                battle &&
+                                user.id === battle.winner &&
+                                user.id === battle.player1
+                                    ? "You"
+                                    : p1Name
+                            }
                             winner={
                                 battle && battle.winner === battle.player1
                                     ? true
@@ -86,7 +159,14 @@ export default function BattleResults({ battle }) {
                             statuses={statuses2}
                             amountLetters={battle ? battle.amount_letters : 5}
                             amountGuesses={battle ? battle.amount_guesses : 6}
-                            name={"Player 2"}
+                            name={
+                                user &&
+                                battle &&
+                                user.id === battle.winner &&
+                                user.id === battle.player2
+                                    ? "You"
+                                    : p2Name
+                            }
                             winner={
                                 battle && battle.winner === battle.player2
                                     ? true
