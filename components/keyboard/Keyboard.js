@@ -60,7 +60,7 @@ export default function Keyboard({ onChar, onDelete, onEnter, guesses }) {
                 <Key value="L" onClick={onClick} status={charStatuses["L"]} />
             </div>
             <div className="flex justify-center space-x-1">
-                <Key value="ENTER" onClick={onClick}>
+                <Key value="DELETE" onClick={onClick}>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
@@ -68,7 +68,7 @@ export default function Keyboard({ onChar, onDelete, onEnter, guesses }) {
                         className="w-6 h-6"
                     >
                         <path
-                            d="M19,3h-6c-1.103,0-2,0.897-2,2v4H5c-1.103,0-2,0.897-2,2v8c0,1.103,0.897,2,2,2h14c1.103,0,2-0.897,2-2V5 C21,3.897,20.103,3,19,3z M17,12c0,2.206-1.794,4-4,4h-3v2l-3-3l3-3v2h3c1.103,0,2-0.897,2-2V8h2V12z"
+                            d="M21,4H6.109c-0.69,0-1.331,0.355-1.696,0.94L0,12l4.412,7.06C4.778,19.645,5.419,20,6.109,20H21c1.105,0,2-0.895,2-2V6 C23,4.895,22.105,4,21,4z M18,15.59L16.59,17L13,13.41L9.41,17L8,15.59L11.59,12L8,8.41L9.41,7L13,10.59L16.59,7L18,8.41L14.41,12 L18,15.59z"
                             fill="currentColor"
                         />
                     </svg>
@@ -80,7 +80,7 @@ export default function Keyboard({ onChar, onDelete, onEnter, guesses }) {
                 <Key value="B" onClick={onClick} status={charStatuses["B"]} />
                 <Key value="N" onClick={onClick} status={charStatuses["N"]} />
                 <Key value="M" onClick={onClick} status={charStatuses["M"]} />
-                <Key value="DELETE" onClick={onClick}>
+                <Key value="ENTER" onClick={onClick}>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
@@ -88,7 +88,7 @@ export default function Keyboard({ onChar, onDelete, onEnter, guesses }) {
                         className="w-6 h-6"
                     >
                         <path
-                            d="M21,4H6.109c-0.69,0-1.331,0.355-1.696,0.94L0,12l4.412,7.06C4.778,19.645,5.419,20,6.109,20H21c1.105,0,2-0.895,2-2V6 C23,4.895,22.105,4,21,4z M18,15.59L16.59,17L13,13.41L9.41,17L8,15.59L11.59,12L8,8.41L9.41,7L13,10.59L16.59,7L18,8.41L14.41,12 L18,15.59z"
+                            d="M19,3h-6c-1.103,0-2,0.897-2,2v4H5c-1.103,0-2,0.897-2,2v8c0,1.103,0.897,2,2,2h14c1.103,0,2-0.897,2-2V5 C21,3.897,20.103,3,19,3z M17,12c0,2.206-1.794,4-4,4h-3v2l-3-3l3-3v2h3c1.103,0,2-0.897,2-2V8h2V12z"
                             fill="currentColor"
                         />
                     </svg>
