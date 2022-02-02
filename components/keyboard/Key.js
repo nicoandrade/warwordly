@@ -3,7 +3,7 @@ export default function Key({ children, status, width = 40, value, onClick }) {
 
     if (!status)
         classes +=
-            " bg-gray-200 hover:bg-gray-300 active:bg-gray-400 text-gray-700 hover:text-gray-800 active:text-gray-900";
+            " bg-gray-200 md:hover:bg-gray-300 active:bg-gray-400 text-gray-700 md:hover:text-gray-800 active:text-gray-900";
     if (status === "absent") classes += " bg-gray-400 text-white";
     if (status === "correct") classes += " bg-green-600 text-white";
     if (status === "present") classes += " bg-orange-500 text-white";

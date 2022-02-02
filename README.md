@@ -3,7 +3,7 @@
 [WarWordly](https://warwordly.com) is an Open Source and Free to Play multiplayer game inspired in the famous [Wordle](https://www.powerlanguage.co.uk/wordle/).
 The idea is to play against an opponent to see who can guess the word first.
 
-![Promo](https://raw.githubusercontent.com/nicoandrade/warwordly/main/public/promo.jpg "Promo")
+![Promo](https://raw.githubusercontent.com/nicoandrade/warwordly/main/public/promo.png "Promo")
 
 ## ⭐️ Demo
 

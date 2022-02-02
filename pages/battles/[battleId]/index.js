@@ -9,6 +9,7 @@ import Alert from "components/alerts/Alert";
 import WinModal from "components/modals/WinModal";
 import OpponentProgress from "components/opponent/OpponentProgress";
 import Spin from "components/Spin";
+import Message from "components/Message";
 import WaitingForOpponent from "components/battles/WaitingForOpponent";
 import BattleSkeleton from "components/battles/BattleSkeleton";
 
@@ -43,8 +44,6 @@ export default function Battle() {
 
     const { user, userDetails } = useUser();
 
-    const [copiedToClipboard, setCopiedToClipboard] = useState(false);
-
     // This define if the current user is player #1 or #2 in the DB
     let playerNumber = null;
     let opponentNumber = null;
@@ -62,7 +61,6 @@ export default function Battle() {
 
     const [currentGuess, setCurrentGuess] = useState("");
     const [isGameWon, setIsGameWon] = useState(false);
-    const [isGameLost, setIsGameLost] = useState(false);
 
     const [isNotEnoughLetters, setIsNotEnoughLetters] = useState(false);
     const [isWordNotFoundAlertOpen, setIsWordNotFoundAlertOpen] =
@@ -83,7 +81,7 @@ export default function Battle() {
     };
 
     const onEnter = async () => {
-        if (!(currentGuess.length === 5) && !isGameLost) {
+        if (!(currentGuess.length === 5)) {
             setIsNotEnoughLetters(true);
             return setTimeout(() => {
                 setIsNotEnoughLetters(false);
@@ -217,7 +215,7 @@ export default function Battle() {
                 console.log(error);
             }
         }
-    }, [battle, user]);
+    }, [battle, user, battleId]);
 
     // Realtime Battle
     useEffect(() => {
@@ -241,6 +239,15 @@ export default function Battle() {
     return (
         <div>
             <Header />
+
+            {battleError && (
+                <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
+                    <Message
+                        type="error"
+                        title="There was an Error loading the Battle data"
+                    />
+                </div>
+            )}
 
             {battleLoading && <BattleSkeleton />}
 
@@ -290,10 +297,11 @@ export default function Battle() {
                         guesses={guesses}
                     />
                     <WinModal
-                        isOpen={isWinModalOpen}
+                        isOpen={true}
                         setIsOpen={setIsWinModalOpen}
                         variant={isGameWon ? "win" : "lost"}
                         solution={battle?.solution}
+                        battleId={battleId ? battleId : ""}
                     />
 
                     <Alert

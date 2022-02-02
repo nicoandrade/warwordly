@@ -1,6 +1,8 @@
 import { Fragment } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 
+import Link from "next/link";
+
 import { EmojiHappyIcon, EmojiSadIcon } from "@heroicons/react/outline";
 
 export default function WinModal({
@@ -8,6 +10,7 @@ export default function WinModal({
     setIsOpen,
     variant = "lost",
     solution,
+    battleId,
 }) {
     let classes = "";
     if (variant === "lost") classes += " bg-red-200 text-red-900";
@@ -103,13 +106,11 @@ export default function WinModal({
                                 </div>
                             </div>
                             <div className="mt-5 sm:mt-6">
-                                <button
-                                    type="button"
-                                    className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
-                                    onClick={() => setIsOpen(false)}
+                                <Link
+                                    href={`${process.env.NEXT_PUBLIC_SITE_URL}/battles/${battleId}/results`}
                                 >
-                                    Go back to dashboard
-                                </button>
+                                    <a className="btn btn-hero">Results</a>
+                                </Link>
                             </div>
                         </div>
                     </Transition.Child>

@@ -9,9 +9,6 @@ import ResultsColumn from "components/results/ResultsColumn";
 
 import useBattle from "hooks/useBattle";
 
-import { isWordInWordList } from "libs/words";
-import { supabase } from "libs/initSupabase";
-
 import { useUser } from "hooks/authUser";
 
 import { getGuessStatuses } from "libs/statuses";
@@ -37,16 +34,18 @@ export default function BattleResults({ battle }) {
         }
     }, [battle, battleId, router]);
 
-    const statuses1 = battle
-        ? battle.guesses1.map((guess) =>
-              getGuessStatuses(guess, battle.solution)
-          )
-        : [];
-    const statuses2 = battle
-        ? battle.guesses2.map((guess) =>
-              getGuessStatuses(guess, battle.solution)
-          )
-        : [];
+    const statuses1 =
+        battle && battle.guesses1
+            ? battle.guesses1.map((guess) =>
+                  getGuessStatuses(guess, battle.solution)
+              )
+            : [];
+    const statuses2 =
+        battle && battle.guesses2
+            ? battle.guesses2.map((guess) =>
+                  getGuessStatuses(guess, battle.solution)
+              )
+            : [];
 
     return (
         <div>
