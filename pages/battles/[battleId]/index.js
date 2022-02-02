@@ -297,7 +297,7 @@ export default function Battle() {
                         guesses={guesses}
                     />
                     <WinModal
-                        isOpen={true}
+                        isOpen={isWinModalOpen}
                         setIsOpen={setIsWinModalOpen}
                         variant={isGameWon ? "win" : "lost"}
                         solution={battle?.solution}
