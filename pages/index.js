@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 
 import Logo from "components/Logo";
 import Header from "components/Header";
+import Footer from "components/Footer";
 import SimpleMessage from "components/SimpleMessage";
-import TipybitButton from "components/TipybitButton";
 
 import { useUser } from "hooks/authUser";
 
@@ -81,14 +81,7 @@ export default function Home() {
                 )}
             </div>
 
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                <p className="text-center mb-5 text-sm">
-                    If you enjoy WarWordly
-                </p>
-                <div className="flex justify-center mb-5">
-                    <TipybitButton />
-                </div>
-            </div>
+            <Footer />
         </div>
     );
 }

@@ -37,5 +37,6 @@ module.exports = {
     plugins: [
         require("@tailwindcss/forms"),
         require("@gradin/tailwindcss-skeleton-screen"),
+        require("@tailwindcss/typography"),
     ],
 };

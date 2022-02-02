@@ -3,7 +3,10 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 
 import Header from "components/Header";
+import Footer from "components/Footer";
+
 import ResultsColumnSkeleton from "components/results/ResultsColumnSkeleton";
+import ShareBattle from "components/results/ShareBattle";
 
 import ResultsColumn from "components/results/ResultsColumn";
 
@@ -94,6 +97,8 @@ export default function BattleResults({ battle }) {
         ogUrl.searchParams.append("winner", winner);
     }
 
+    const battleURL = `${process.env.NEXT_PUBLIC_SITE_URL}/battles/${battleId}/results`;
+
     return (
         <div>
             <NextSeo
@@ -142,10 +147,7 @@ export default function BattleResults({ battle }) {
                             amountLetters={battle ? battle.amount_letters : 5}
                             amountGuesses={battle ? battle.amount_guesses : 6}
                             name={
-                                user &&
-                                battle &&
-                                user.id === battle.winner &&
-                                user.id === battle.player1
+                                user && battle && user.id === battle.player1
                                     ? "You"
                                     : p1Name
                             }
@@ -160,10 +162,7 @@ export default function BattleResults({ battle }) {
                             amountLetters={battle ? battle.amount_letters : 5}
                             amountGuesses={battle ? battle.amount_guesses : 6}
                             name={
-                                user &&
-                                battle &&
-                                user.id === battle.winner &&
-                                user.id === battle.player2
+                                user && battle && user.id === battle.player2
                                     ? "You"
                                     : p2Name
                             }
@@ -176,6 +175,10 @@ export default function BattleResults({ battle }) {
                     </div>
                 )}
             </div>
+
+            <ShareBattle battleId={battleId} imageURL={ogUrl} />
+
+            <Footer />
         </div>
     );
 }
