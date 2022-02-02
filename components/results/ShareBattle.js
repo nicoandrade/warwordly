@@ -24,7 +24,7 @@ export default function ShareBattle({ battleId, imageURL }) {
                         href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
                             `Check out my battle on WarWordly \n\n${battleURL}`
                         )}`}
-                        rel="noopener"
+                        rel="noreferrer"
                         target="_blank"
                         className="inline-flex items-center justify-center p-5 bg-gray-100 hover:bg-gray-200 rounded-full text-blue-500"
                     >

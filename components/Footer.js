@@ -52,7 +52,7 @@ export default function Footer({ wide = "sm" }) {
                         <a
                             key={item.name}
                             href={item.href}
-                            rel="noopener"
+                            rel="noreferrer"
                             target="_blank"
                             className="text-gray-400 hover:text-gray-500"
                         >

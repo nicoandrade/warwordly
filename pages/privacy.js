@@ -128,8 +128,8 @@ export default function Privacy() {
                             tracking on all emails sent. See the{" "}
                             <a
                                 href="https://www.mailgun.com/privacy-policy/"
+                                rel="noreferrer"
                                 target="_blank"
-                                rel="noopener"
                             >
                                 Mailgun Privacy Policy
                             </a>{" "}
@@ -145,7 +145,7 @@ export default function Privacy() {
                             <a
                                 href="https://plausible.io/privacy"
                                 target="_blank"
-                                rel="noopener"
+                                rel="noreferrer"
                             >
                                 Plausible Privacy Policy
                             </a>{" "}

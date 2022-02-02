@@ -43,7 +43,7 @@ export default function Privacy() {
                         at the{" "}
                         <a
                             href="https://github.com/nicoandrade/warwordly"
-                            rel="noopener"
+                            rel="noreferrer"
                             target="_blank"
                         >
                             Github Repo
