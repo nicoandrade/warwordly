@@ -6,6 +6,7 @@ import Logo from "components/Logo";
 import Header from "components/Header";
 import Footer from "components/Footer";
 import SimpleMessage from "components/SimpleMessage";
+import Spin from "components/Spin";
 
 import { useUser } from "hooks/authUser";
 
@@ -22,6 +23,7 @@ export default function Home() {
     const { locale: activeLocale } = router;
 
     const [message, setMessage] = useState("");
+    const [formLoading, setFormLoading] = useState(false);
 
     const { user } = useUser();
 
@@ -32,6 +34,8 @@ export default function Home() {
 
         // If the user is null (not false) means that we don't know yet if it is logged in or not
         if (null === user) return;
+
+        setFormLoading(true);
 
         if (user) {
             // If the user is already logged in, we create the new battle
@@ -54,6 +58,7 @@ export default function Home() {
                 router.push(`/battles/${data.id}`);
             } catch (e) {
                 setMessage(e.message);
+                setFormLoading(false);
             }
         } else {
             router.push(`/login`);
@@ -79,8 +84,17 @@ export default function Home() {
                         className="flex items-center justify-center w-full sm:w-auto py-6 px-8 text-3xl font-bold bg-amber-200 text-amber-600 rounded-lg hover:bg-amber-300 hover:text-amber-800 transition-colors uppercase"
                         onClick={handleSubmit}
                     >
-                        <Logo className=" w-auto h-8 mr-4" logoMinimal={true} />
-                        {t("newBattle")}
+                        {formLoading ? (
+                            <Spin className="h-7 w-7 fill-current" />
+                        ) : (
+                            <>
+                                <Logo
+                                    className=" w-auto h-8 mr-4"
+                                    logoMinimal={true}
+                                />
+                                {t("newBattle")}
+                            </>
+                        )}
                     </button>
                 </div>
                 {message && (
