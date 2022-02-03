@@ -33,10 +33,6 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 export default function Battle() {
     const router = useRouter();
 
-    if (router.isFallback) {
-        return "";
-    }
-
     // Gets the Battle ID from the URL
     const { battleId } = router.query;
 
@@ -268,6 +264,9 @@ export default function Battle() {
         };
     }, [battleId]);
 
+    if (router.isFallback) {
+        return "";
+    }
     return (
         <div>
             <Header />
