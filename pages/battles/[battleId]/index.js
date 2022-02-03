@@ -28,7 +28,7 @@ import { InformationCircleIcon } from "@heroicons/react/outline";
 import { useUser } from "hooks/authUser";
 
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+//import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function Battle() {
     const router = useRouter();
@@ -377,14 +377,14 @@ export default function Battle() {
     );
 }
 
-// This function gets called at build time
-export async function getStaticPaths() {
-    return { paths: [], fallback: true };
-}
+// // This function gets called at build time
+// export async function getStaticPaths() {
+//     return { paths: [], fallback: true };
+// }
 
-export const getStaticProps = async ({ locale }) => ({
-    props: {
-        ...(await serverSideTranslations(locale, ["common", "battle"])),
-    },
-    revalidate: 600, // This page content will be updated every 600 sec (10 min)
-});
+// export const getStaticProps = async ({ locale }) => ({
+//     props: {
+//         ...(await serverSideTranslations(locale, ["common", "battle"])),
+//     },
+//     revalidate: 600, // This page content will be updated every 600 sec (10 min)
+// });
