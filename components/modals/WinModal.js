@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useRef } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 
 import Link from "next/link";
@@ -26,12 +26,15 @@ export default function WinModal({
     let title = "You Lost";
     if (variant === "win") title = "You Win";
 
+    let modalRef = useRef(null);
+
     return (
         <Transition.Root show={isOpen} as={Fragment}>
             <Dialog
                 as="div"
                 className="fixed z-10 inset-0 overflow-y-auto"
                 onClose={setIsOpen}
+                initialFocus={modalRef}
             >
                 <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:p-0">
                     <Transition.Child
@@ -72,6 +75,7 @@ export default function WinModal({
                                             ? "bg-green-100"
                                             : "bg-red-100"
                                     }`}
+                                    ref={modalRef}
                                 >
                                     {"win" === variant && (
                                         <EmojiHappyIcon

@@ -1,0 +1,8 @@
+{
+    "_comment": "english",
+    "title": "Login with your email",
+    "description": "We will email you a magic sign in link.",
+    "sendMagicLink": "Send Magic Link",
+    "responseSentTitle": "Magic Link sent, check your email",
+    "responseSentMessage": "Check your SPAM folder if necessary."
+}

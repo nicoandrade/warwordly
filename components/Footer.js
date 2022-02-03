@@ -1,7 +1,13 @@
 import Link from "next/link";
 
 import Logo from "./Logo";
+import LocaleSwitcher from "./LocaleSwitcher";
+
+import { useTranslation } from "next-i18next";
+
 export default function Footer({ wide = "sm" }) {
+    const { t } = useTranslation("common");
+
     const navigation = [
         {
             name: "Instagram",
@@ -83,18 +89,21 @@ export default function Footer({ wide = "sm" }) {
                     }[wide]
                 } mx-auto px-4 sm:px-6 lg:px-8`}
             >
-                <div className="py-3 border-t border-black border-opacity-5 flex justify-center md:justify-between">
-                    <div className="flex justify-center space-x-6 md:order-2 text-xs">
+                <div className="py-3 border-t border-black border-opacity-5 flex justify-between sm:items-center">
+                    <div className="flex justify-center space-x-6 sm:order-2 text-xs">
                         <Link href="/privacy">
                             <a className="text-gray-500 hover:text-hero py-2 block">
-                                Privacy
+                                {t("privacy")}
                             </a>
                         </Link>
                         <Link href="/about">
                             <a className="text-gray-500 hover:text-hero py-2 block">
-                                About
+                                {t("about")}
                             </a>
                         </Link>
+                    </div>
+                    <div className="sm:order-2">
+                        <LocaleSwitcher />
                     </div>
                 </div>
             </div>

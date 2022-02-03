@@ -13,12 +13,17 @@ import { getWordSolution } from "libs/words";
 
 import { supabase } from "libs/initSupabase";
 
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
 export default function Home() {
     const router = useRouter();
 
     const [message, setMessage] = useState("");
 
     const { user } = useUser();
+
+    const { t } = useTranslation(["common", "home"]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -59,7 +64,7 @@ export default function Home() {
                     <Logo className="fill-current text-hero w-auto h-10 sm:h-12" />
                 </div>
                 <p className="text-center">
-                    Word guessing game to compete with your friends
+                    {t("description", { ns: "home" })}
                 </p>
             </div>
 
@@ -71,7 +76,7 @@ export default function Home() {
                         onClick={handleSubmit}
                     >
                         <Logo className=" w-auto h-8 mr-4" logoMinimal={true} />
-                        New Battle
+                        {t("newBattle")}
                     </button>
                 </div>
                 {message && (
@@ -85,3 +90,9 @@ export default function Home() {
         </div>
     );
 }
+
+export const getStaticProps = async ({ locale }) => ({
+    props: {
+        ...(await serverSideTranslations(locale, ["common", "home"])),
+    },
+});

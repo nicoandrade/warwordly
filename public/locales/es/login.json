@@ -1,0 +1,8 @@
+{
+    "_comment": "español",
+    "title": "Ingresá con tu email",
+    "description": "Te enviaremos un email con un magic link para ingresar.",
+    "sendMagicLink": "Enviar Magic Link",
+    "responseSentTitle": "Magic Link enviado, revisá tu email",
+    "responseSentMessage": "Revisá la carpeta de SPAM si es necesario."
+}

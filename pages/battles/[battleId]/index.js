@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+import Link from "next/link";
+
 import { useRouter } from "next/router";
 
 import Header from "components/Header";
@@ -18,11 +20,7 @@ import useBattle from "hooks/useBattle";
 import { isWordInWordList } from "libs/words";
 import { supabase } from "libs/initSupabase";
 
-import {
-    UserCircleIcon,
-    DuplicateIcon,
-    ClipboardCheckIcon,
-} from "@heroicons/react/solid";
+import { UserCircleIcon } from "@heroicons/react/solid";
 
 import { useUser } from "hooks/authUser";
 
@@ -32,17 +30,17 @@ export default function Battle() {
     // Gets the Battle ID from the URL
     const { battleId } = router.query;
 
+    const { user } = useUser();
+
     // We use SWR but as immutable and then update via mutate
     const { battle, battleLoading, battleError, battleMutate } = useBattle(
-        battleId,
+        battleId && user ? battleId : null,
         {
             revalidateIfStale: false,
             revalidateOnFocus: false,
             revalidateOnReconnect: false,
         }
     );
-
-    const { user, userDetails } = useUser();
 
     // This define if the current user is player #1 or #2 in the DB
     let playerNumber = null;
@@ -115,17 +113,10 @@ export default function Battle() {
                     .single();
 
                 if (error) throw error;
-                console.log(data);
 
                 battleMutate(data);
             } catch (error) {
                 console.log(error);
-
-                // setResponseMessage({
-                //     messageShow: true,
-                //     messageType: "error",
-                //     messageTitle: error.error_description || error.message,
-                // });
             } finally {
                 setUpdateBattleLoading(false);
             }
@@ -156,6 +147,24 @@ export default function Battle() {
 
             // If the user maxed out the guesses, game over.
             if (guesses.length === 5) {
+                // If all users made 6 guesses, change status to ended
+                if (battle[`guesses${opponentNumber}`].length === 6) {
+                    try {
+                        let dataToUpdate = { status: "ended" };
+                        // Updates the Battle data in the DB
+                        const { data, error } = await supabase
+                            .from("battles")
+                            .update(dataToUpdate)
+                            .eq("id", battleId)
+                            .single();
+                        if (error) throw error;
+                        // Updates the complete data to SWR
+                        battleMutate(data);
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+
                 setIsGameWon(false);
                 setIsWinModalOpen(true);
             }
@@ -289,13 +298,26 @@ export default function Battle() {
                             <span className="h-5 w-5 block" />
                         )}
                     </div>
+                    {battle && guesses.length < battle.amount_guesses && (
+                        <Keyboard
+                            onChar={onChar}
+                            onDelete={onDelete}
+                            onEnter={onEnter}
+                            guesses={guesses}
+                        />
+                    )}
 
-                    <Keyboard
-                        onChar={onChar}
-                        onDelete={onDelete}
-                        onEnter={onEnter}
-                        guesses={guesses}
-                    />
+                    {battle && "ended" === battle.status && (
+                        <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
+                            <Link
+                                href={`${process.env.NEXT_PUBLIC_SITE_URL}/battles/${battleId}/results`}
+                                prefetch={false}
+                            >
+                                <a className="btn btn-hero">Results</a>
+                            </Link>
+                        </div>
+                    )}
+
                     <WinModal
                         isOpen={isWinModalOpen}
                         setIsOpen={setIsWinModalOpen}

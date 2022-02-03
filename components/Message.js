@@ -62,7 +62,7 @@ const Message = ({ title, type = "error", message }) => {
                 <div className="ml-3">
                     <h3 className={`text-base ${textColor}`}>{title}</h3>
                     {message && (
-                        <p className={`text-sm mt-2 ${textColor} opacity-90`}>
+                        <p className={`text-xs mt-2 ${textColor} opacity-90`}>
                             {message}
                         </p>
                     )}

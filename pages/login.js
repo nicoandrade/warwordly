@@ -1,23 +1,28 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-import { AuthRedirect, useUser } from "hooks/authUser";
+import { useUser } from "hooks/authUser";
 
+import Header from "components/Header";
 import ButtonSubmit from "components/ButtonSubmit";
 import Message from "components/Message";
 import Logo from "components/Logo";
 
 import { NextSeo } from "next-seo";
 
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
 export default function Login() {
-    AuthRedirect();
     const router = useRouter();
+
+    const { t } = useTranslation(["common", "login"]);
 
     const { redirectTo } = router.query;
 
-    const { signIn } = useUser();
+    const { user, signIn } = useUser();
 
     const [formLoading, setFormLoading] = useState(false);
     const [message, setMessage] = useState({
@@ -54,7 +59,8 @@ export default function Login() {
             setMessage({
                 messageShow: true,
                 messageType: "success",
-                messageTitle: "Magic Link sent, check your email",
+                messageTitle: t("responseSentTitle", { ns: "login" }),
+                message: t("responseSentMessage", { ns: "login" }),
             });
             setFormLoading(false);
         } catch (error) {
@@ -68,9 +74,18 @@ export default function Login() {
         }
     };
 
+    useEffect(() => {
+        if (user && redirectTo) {
+            router.push(redirectTo);
+        } else if (user) {
+            router.push("/");
+        }
+    }, [user, router, redirectTo]);
+
     return (
         <div className="flex flex-col justify-center py-12 sm:px-6 lg:px-8">
             <NextSeo title={"Login - WarWordly"} />
+
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="flex justify-center mb-4">
                     <Link href="/">
@@ -84,11 +99,9 @@ export default function Login() {
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <div className=" py-8 px-4 sm:px-10">
                     <h1 className="mb-3 text-2xl font-bold text-gray-600">
-                        Login with your email
+                        {t("title", { ns: "login" })}
                     </h1>
-                    <p className="mb-6">
-                        We will email you a magic sign in link.
-                    </p>
+                    <p className="mb-6">{t("description", { ns: "login" })}</p>
                     <form
                         className="space-y-6"
                         onSubmit={(e) => handleLogin(e)}
@@ -117,13 +130,14 @@ export default function Login() {
                         <div>
                             <ButtonSubmit
                                 loading={formLoading}
-                                text="Send Magic Link"
+                                text={t("sendMagicLink", { ns: "login" })}
                             />
                         </div>
 
                         {message.messageShow && (
                             <Message
                                 title={message.messageTitle}
+                                message={message.message}
                                 type={message.messageType}
                             />
                         )}
@@ -133,3 +147,9 @@ export default function Login() {
         </div>
     );
 }
+
+export const getStaticProps = async ({ locale }) => ({
+    props: {
+        ...(await serverSideTranslations(locale, ["common", "login"])),
+    },
+});

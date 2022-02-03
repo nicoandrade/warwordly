@@ -9,6 +9,8 @@ import SEO from "next-seo.config";
 
 import PlausibleProvider from "next-plausible";
 
+import { appWithTranslation } from "next-i18next";
+
 function MyApp({ Component, pageProps }) {
     return (
         <UserContextProvider>
@@ -41,4 +43,4 @@ function MyApp({ Component, pageProps }) {
     );
 }
 
-export default MyApp;
+export default appWithTranslation(MyApp);

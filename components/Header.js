@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useUser } from "hooks/authUser";
 
 import Logo from "./Logo";
+import { useTranslation } from "next-i18next";
 
 const NextLink = ({ href, children, ...rest }) => (
     <Link href={href}>
@@ -16,6 +17,7 @@ const NextLink = ({ href, children, ...rest }) => (
 
 export default function Header({ logoMinimal = false }) {
     const { user, signOut, userDetails } = useUser();
+    const { t } = useTranslation("common");
 
     return (
         <header className="mb-6">
@@ -174,7 +176,7 @@ export default function Header({ logoMinimal = false }) {
                                                             d="M8.5 2.75c1.45 0 2.009.009 2.443.14a3.25 3.25 0 012.167 2.167c.132.435.14.993.14 2.443V8a.75.75 0 001.5 0v-.643c0-1.258 0-2.06-.204-2.735a4.75 4.75 0 00-3.167-3.167C10.703 1.25 9.9 1.25 8.644 1.25h-.671c-.909 0-1.63 0-2.213.04-.596.04-1.103.125-1.578.321a4.75 4.75 0 00-2.57 2.57c-.197.475-.281.983-.322 1.579-.04.583-.04 1.303-.04 2.212v8.055c0 .909 0 1.629.04 2.212.04.596.125 1.104.322 1.578a4.75 4.75 0 002.57 2.571c.475.196.982.281 1.578.322.584.04 1.304.04 2.213.04h.67c1.258 0 2.06 0 2.736-.205a4.75 4.75 0 003.166-3.166c.206-.676.205-1.478.205-2.737V16a.75.75 0 00-1.5 0v.5H14h-.75c0 1.45-.008 2.01-.14 2.444a3.25 3.25 0 01-2.166 2.166c-.435.132-.994.14-2.444.14H8c-.942 0-1.611 0-2.137-.036-.52-.035-.846-.103-1.107-.21a3.25 3.25 0 01-1.759-1.76c-.108-.26-.175-.586-.21-1.106-.036-.526-.037-1.195-.037-2.137V8c0-.943 0-1.612.036-2.138.036-.52.103-.845.212-1.106a3.25 3.25 0 011.758-1.76c.261-.107.587-.175 1.107-.21C6.389 2.75 7.058 2.75 8 2.75h.5zm10.03 4.72a.75.75 0 00-1.06 1.06l2.72 2.72H9a.75.75 0 000 1.5h11.19l-2.72 2.72a.75.75 0 001.06 1.06l4-4a.75.75 0 000-1.06l-4-4z"
                                                         />
                                                     </svg>
-                                                    Sign out
+                                                    {t("signOut")}
                                                 </a>
                                             )}
                                         </Menu.Item>
@@ -186,7 +188,7 @@ export default function Header({ logoMinimal = false }) {
                         <div className="ml-10 space-x-8">
                             <Link href="/login">
                                 <a className="btn bg-transparent hover:bg-gray-100">
-                                    Sign in
+                                    {t("signIn")}
                                 </a>
                             </Link>
                         </div>

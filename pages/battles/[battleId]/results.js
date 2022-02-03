@@ -208,6 +208,6 @@ export async function getStaticProps({ params }) {
 
     return {
         props: { battle },
-        revalidate: 1200, // This page content will be updated every 1200 sec (20 min)
+        revalidate: 600, // This page content will be updated every 600 sec (10 min)
     };
 }
