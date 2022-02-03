@@ -32,6 +32,8 @@ Also uses [Supabase](https://supabase.com) as Data Base. Supabase handles the re
 -   🔋 [Supabase](https://supabase.com) for DB, Auth & Realtime
 -   🎨 [Tailwind](https://tailwindcss.com) for styling
 -   💾 [SWR](https://swr.vercel.app) for data fetching
+-   🌎 [next-i18next](https://github.com/isaachinman/next-i18next) translation to other languages
+-   ✏️ [Heroicons](https://heroicons.com/) for icons
 -   ⚡️ [tipybit](https://tipybit.com) for donations
 
 ### 🛠 Start Developing
