@@ -3,6 +3,8 @@ import Header from "components/Header";
 
 import { NextSeo } from "next-seo";
 
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
 export default function Privacy() {
     return (
         <div>
@@ -189,3 +191,9 @@ export default function Privacy() {
         </div>
     );
 }
+
+export const getStaticProps = async ({ locale }) => ({
+    props: {
+        ...(await serverSideTranslations(locale, ["common"])),
+    },
+});

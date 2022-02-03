@@ -4,7 +4,9 @@ import TipybitButton from "components/TipybitButton";
 
 import { NextSeo } from "next-seo";
 
-export default function Privacy() {
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
+export default function About() {
     return (
         <div>
             <NextSeo title="About the game - WarWordly" />
@@ -65,3 +67,9 @@ export default function Privacy() {
         </div>
     );
 }
+
+export const getStaticProps = async ({ locale }) => ({
+    props: {
+        ...(await serverSideTranslations(locale, ["common"])),
+    },
+});

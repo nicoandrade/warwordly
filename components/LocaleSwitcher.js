@@ -29,7 +29,7 @@ export default function LocaleSwitcher() {
                 }}
             >
                 {locales.map((locale) => (
-                    <option>{locale}</option>
+                    <option key={locale}>{locale}</option>
                 ))}
             </select>
             <GlobeIcon className="w-4 h-4 text-gray-400 absolute top-1/2 -translate-y-1/2 left-3" />
