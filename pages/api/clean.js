@@ -7,6 +7,8 @@ export default async function handler(req, res) {
 
             words = words.filter((word) => word.length == 5);
 
+            // remove Diacríticos
+            // https://es.stackoverflow.com/questions/62031/eliminar-signos-diacr%C3%ADticos-en-javascript-eliminar-tildes-acentos-ortogr%C3%A1ficos
             words = words.map((word) =>
                 word
                     .normalize("NFD")
