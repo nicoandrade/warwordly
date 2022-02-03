@@ -95,11 +95,18 @@ export default function Battle() {
             }, 2000);
         }
 
-        if (false === (await isWordInWordList(currentGuess, battle.language))) {
-            setIsWordNotFoundAlertOpen(true);
-            return setTimeout(() => {
-                setIsWordNotFoundAlertOpen(false);
-            }, 2000);
+        try {
+            if (
+                false ===
+                (await isWordInWordList(currentGuess, battle.language))
+            ) {
+                setIsWordNotFoundAlertOpen(true);
+                return setTimeout(() => {
+                    setIsWordNotFoundAlertOpen(false);
+                }, 2000);
+            }
+        } catch (error) {
+            console.log(error);
         }
 
         // Checks if the current word is the solution in the DB
