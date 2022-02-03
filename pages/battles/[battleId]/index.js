@@ -5,10 +5,12 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import Header from "components/Header";
+import Footer from "components/Footer";
 import Grid from "components/grid/Grid";
 import Keyboard from "components/keyboard/Keyboard";
 import Alert from "components/alerts/Alert";
 import WinModal from "components/modals/WinModal";
+import RulesModal from "components/modals/RulesModal";
 import OpponentProgress from "components/opponent/OpponentProgress";
 import Spin from "components/Spin";
 import Message from "components/Message";
@@ -21,8 +23,12 @@ import { isWordInWordList } from "libs/words";
 import { supabase } from "libs/initSupabase";
 
 import { UserCircleIcon } from "@heroicons/react/solid";
+import { InformationCircleIcon } from "@heroicons/react/outline";
 
 import { useUser } from "hooks/authUser";
+
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function Battle() {
     const router = useRouter();
@@ -31,6 +37,8 @@ export default function Battle() {
     const { battleId } = router.query;
 
     const { user } = useUser();
+
+    const { t } = useTranslation("battle");
 
     // We use SWR but as immutable and then update via mutate
     const { battle, battleLoading, battleError, battleMutate } = useBattle(
@@ -64,6 +72,7 @@ export default function Battle() {
     const [isWordNotFoundAlertOpen, setIsWordNotFoundAlertOpen] =
         useState(false);
     const [isWinModalOpen, setIsWinModalOpen] = useState(false);
+    const [isRulesModalOpen, setIsRulesModalOpen] = useState(false);
 
     const [guesses, setGuesses] = useState([]);
     const [guessesOpponent, setGuessesOpponent] = useState([]);
@@ -86,7 +95,7 @@ export default function Battle() {
             }, 2000);
         }
 
-        if (!isWordInWordList(currentGuess)) {
+        if (false === (await isWordInWordList(currentGuess, battle.language))) {
             setIsWordNotFoundAlertOpen(true);
             return setTimeout(() => {
                 setIsWordNotFoundAlertOpen(false);
@@ -148,7 +157,10 @@ export default function Battle() {
             // If the user maxed out the guesses, game over.
             if (guesses.length === 5) {
                 // If all users made 6 guesses, change status to ended
-                if (battle[`guesses${opponentNumber}`].length === 6) {
+                if (
+                    battle[`guesses${opponentNumber}`] &&
+                    battle[`guesses${opponentNumber}`].length === 6
+                ) {
                     try {
                         let dataToUpdate = { status: "ended" };
                         // Updates the Battle data in the DB
@@ -251,10 +263,7 @@ export default function Battle() {
 
             {battleError && (
                 <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
-                    <Message
-                        type="error"
-                        title="There was an Error loading the Battle data"
-                    />
+                    <Message type="error" title={t("errorBattle")} />
                 </div>
             )}
 
@@ -263,12 +272,24 @@ export default function Battle() {
             {battle &&
                 user &&
                 user.id === battle.player1 &&
-                !battle.player2 && <WaitingForOpponent battleId={battleId} />}
+                !battle.player2 && (
+                    <WaitingForOpponent
+                        battleId={battleId}
+                        battleLanguage={battle.language}
+                    />
+                )}
 
             {battle && user && battle.player1 && battle.player2 && (
                 <>
                     <div className="flex justify-center mx-auto w-full">
-                        <div className="mt-10 sm:mt-12 mx-2 sm:mx-4">
+                        <div className="mx-2 sm:mx-4">
+                            <button
+                                type="button"
+                                onClick={() => setIsRulesModalOpen(true)}
+                                className="text-gray-400 hover:text-gray-600 hover:bg-gray-100 bg-transparent rounded-full p-2 transition-colors mb-2"
+                            >
+                                <InformationCircleIcon className="w-6 h-6" />
+                            </button>
                             <Grid
                                 guesses={guesses}
                                 currentGuess={currentGuess}
@@ -280,7 +301,7 @@ export default function Battle() {
                             <div className="h-10 sm:h-12 flex flex-wrap justify-center items-center w-full">
                                 <UserCircleIcon className="w-6 h-6 sm:w-7 sm:h-7 text-gray-400" />
                                 <span className="block w-full text-center text-xs">
-                                    Opponent
+                                    {t("opponent")}
                                 </span>
                             </div>
                             <OpponentProgress
@@ -313,7 +334,7 @@ export default function Battle() {
                                 href={`${process.env.NEXT_PUBLIC_SITE_URL}/battles/${battleId}/results`}
                                 prefetch={false}
                             >
-                                <a className="btn btn-hero">Results</a>
+                                <a className="btn btn-hero">{t("results")}</a>
                             </Link>
                         </div>
                     )}
@@ -327,17 +348,37 @@ export default function Battle() {
                     />
 
                     <Alert
-                        message="Not enough letters"
+                        message={t("notEnoughLetters")}
                         isOpen={isNotEnoughLetters}
                         setIsOpen={setIsNotEnoughLetters}
                     />
                     <Alert
-                        message="Word not found"
+                        message={t("wordNotFound")}
                         isOpen={isWordNotFoundAlertOpen}
                         setIsOpen={setIsWordNotFoundAlertOpen}
                     />
+
+                    <RulesModal
+                        isOpen={isRulesModalOpen}
+                        setIsOpen={setIsRulesModalOpen}
+                    />
                 </>
             )}
+
+            <Footer />
         </div>
     );
 }
+
+// This function gets called at build time
+export async function getStaticPaths() {
+    const paths = [];
+    // We'll pre-render only these paths at build time.
+    return { paths, fallback: true };
+}
+
+export const getStaticProps = async ({ locale }) => ({
+    props: {
+        ...(await serverSideTranslations(locale, ["common", "battle"])),
+    },
+});

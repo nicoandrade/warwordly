@@ -1,6 +1,8 @@
 import ResultsEmptyRow from "components/results/ResultsEmptyRow";
 import ResultsRow from "components/results/ResultsRow";
 
+import { useTranslation } from "next-i18next";
+
 export default function ResultsColumn({
     statuses,
     amountLetters = 5,
@@ -8,6 +10,8 @@ export default function ResultsColumn({
     name,
     winner = false,
 }) {
+    const { t } = useTranslation("battle");
+
     return (
         <div>
             <div
@@ -42,7 +46,7 @@ export default function ResultsColumn({
             {winner && (
                 <div className="text-center uppercase text-green-700 font-bold">
                     <span className="mr-3">🏆</span>
-                    Winner
+                    {t("winner")}
                 </div>
             )}
         </div>

@@ -5,6 +5,8 @@ import Link from "next/link";
 
 import { EmojiHappyIcon, EmojiSadIcon } from "@heroicons/react/outline";
 
+import { useTranslation } from "next-i18next";
+
 export default function WinModal({
     isOpen,
     setIsOpen,
@@ -12,6 +14,8 @@ export default function WinModal({
     solution,
     battleId,
 }) {
+    const { t } = useTranslation(["battle"]);
+
     let classes = "";
     if (variant === "lost") classes += " bg-red-200 text-red-900";
     if (variant === "win") classes += " bg-green-200 text-green-900";
@@ -23,8 +27,8 @@ export default function WinModal({
     let classesTitle = " text-red-800";
     if (variant === "win") classesTitle = " text-green-800";
 
-    let title = "You Lost";
-    if (variant === "win") title = "You Win";
+    let title = t("lostTitle");
+    if (variant === "win") title = t("winTitle");
 
     let modalRef = useRef(null);
 
@@ -100,7 +104,7 @@ export default function WinModal({
                                     {"lost" === variant && (
                                         <div className="mt-2">
                                             <p className="text-sm text-gray-500 mb-1">
-                                                The word is
+                                                {t("theWordIs")}
                                             </p>
                                             <span className="block text-2xl font-bold uppercase">
                                                 {solution}
@@ -114,7 +118,9 @@ export default function WinModal({
                                     href={`${process.env.NEXT_PUBLIC_SITE_URL}/battles/${battleId}/results`}
                                     prefetch={false}
                                 >
-                                    <a className="btn btn-hero">Results</a>
+                                    <a className="btn btn-hero">
+                                        {t("results")}
+                                    </a>
                                 </Link>
                             </div>
                         </div>

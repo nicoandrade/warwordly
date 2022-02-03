@@ -61,27 +61,26 @@ export default function Header({ logoMinimal = false }) {
                                                     />
                                                 </div>
                                             ) : (
-                                                <div className="w-7 h-7 inline-flex items-center justify-center bg-gray-100 rounded-full text-sm text-center text-gray-400  font-bold uppercase">
+                                                <div className="w-7 h-7 inline-flex items-center justify-center sm:bg-gray-200 rounded-full text-xs text-center text-gray-500  font-bold uppercase">
                                                     {userDetails &&
-                                                        userDetails.display_name &&
-                                                        userDetails.display_name
-                                                            .split(" ")[0]
-                                                            .charAt(0) +
-                                                            (userDetails.display_name.split(
-                                                                " "
-                                                            ).length > 1
-                                                                ? userDetails.display_name
-                                                                      .split(
-                                                                          " "
-                                                                      )[1]
-                                                                      .charAt(0)
-                                                                : userDetails.display_name
-                                                                      .split(
-                                                                          " "
-                                                                      )[0]
-                                                                      .charAt(
-                                                                          1
-                                                                      ))}
+                                                    userDetails.display_name
+                                                        ? userDetails.display_name
+                                                              .split(" ")[0]
+                                                              .charAt(0) +
+                                                          (userDetails.display_name.split(
+                                                              " "
+                                                          ).length > 1
+                                                              ? userDetails.display_name
+                                                                    .split(
+                                                                        " "
+                                                                    )[1]
+                                                                    .charAt(0)
+                                                              : userDetails.display_name
+                                                                    .split(
+                                                                        " "
+                                                                    )[0]
+                                                                    .charAt(1))
+                                                        : user.email.charAt(0)}
                                                 </div>
                                             )
                                         ) : (

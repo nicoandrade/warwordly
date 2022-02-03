@@ -19,6 +19,9 @@ import { fetchServerSideBattle } from "libs/fetch-server-side-data";
 
 import { NextSeo } from "next-seo";
 
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
 export default function BattleResults({ battle }) {
     const router = useRouter();
 
@@ -26,6 +29,8 @@ export default function BattleResults({ battle }) {
     const { battleId } = router.query;
 
     const { user, userDetails } = useUser();
+
+    const { t } = useTranslation(["battle", "common"]);
 
     useEffect(() => {
         if (!battle) return;
@@ -58,16 +63,16 @@ export default function BattleResults({ battle }) {
             ? battle.user1.display_name
             : battle.user1.username
             ? battle.user1.username
-            : "Player 1"
-        : "Player 1";
+            : `${t("player")} 1`
+        : `${t("player")} 1`;
 
     let p2Name = battle
         ? battle.user2.display_name
             ? battle.user2.display_name
             : battle.user2.username
             ? battle.user2.username
-            : "Player 2"
-        : "Player 2";
+            : `${t("player")} 2`
+        : `${t("player")} 2`;
 
     // Build the variable to pass to the Open Graph image
     let grid1 = statuses1.map((row) => row.map((cell) => cell.charAt(0)));
@@ -134,7 +139,7 @@ export default function BattleResults({ battle }) {
 
             <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
                 <h1 className="flex items-center text-2xl font-bold text-gray-600 mb-5">
-                    Results
+                    {t("results")}
                 </h1>
 
                 {router.isFallback ? (
@@ -150,7 +155,7 @@ export default function BattleResults({ battle }) {
                             amountGuesses={battle ? battle.amount_guesses : 6}
                             name={
                                 user && battle && user.id === battle.player1
-                                    ? "You"
+                                    ? t("you")
                                     : p1Name
                             }
                             winner={
@@ -165,7 +170,7 @@ export default function BattleResults({ battle }) {
                             amountGuesses={battle ? battle.amount_guesses : 6}
                             name={
                                 user && battle && user.id === battle.player2
-                                    ? "You"
+                                    ? t("you")
                                     : p2Name
                             }
                             winner={
@@ -182,7 +187,9 @@ export default function BattleResults({ battle }) {
 
             <div className="max-w-lg mx-auto px-4 sm:px-6 lg:px-8 mb-10 flex justify-center mt-12">
                 <Link href="/">
-                    <a className="btn w-full">New Battle</a>
+                    <a className="btn w-full">
+                        {t("newBattle", { ns: "common" })}
+                    </a>
                 </Link>
             </div>
 
@@ -199,7 +206,7 @@ export async function getStaticPaths() {
 }
 
 // This function gets called at build time
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params, locale }) {
     const { battleId } = params;
 
     // Fetch the data from the Data base.
@@ -207,7 +214,10 @@ export async function getStaticProps({ params }) {
     const battle = await fetchServerSideBattle(battleId);
 
     return {
-        props: { battle },
+        props: {
+            battle,
+            ...(await serverSideTranslations(locale, ["common", "battle"])),
+        },
         revalidate: 600, // This page content will be updated every 600 sec (10 min)
     };
 }

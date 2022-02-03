@@ -1,10 +1,11 @@
-import { Fragment, useState, useRef } from "react";
+import { Fragment, useState, useRef, useEffect } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 
 import { PhotographIcon, LinkIcon } from "@heroicons/react/outline";
 import { ClipboardCheckIcon } from "@heroicons/react/solid";
 
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { useTranslation } from "next-i18next";
 
 export default function ShareBattle({ battleId, imageURL }) {
     const [isOpenModal, setIsOpenModal] = useState(false);
@@ -13,16 +14,23 @@ export default function ShareBattle({ battleId, imageURL }) {
 
     const battleURL = `${process.env.NEXT_PUBLIC_SITE_URL}/battles/${battleId}/results`;
 
+    const { t } = useTranslation(["battle"]);
+
+    useEffect(() => {
+        const img = new Image();
+        img.src = imageURL;
+    }, [imageURL]);
+
     return (
         <div>
             <h3 className="text-center text-xl uppercase text-blue-500 font-bold mt-12 mb-4">
-                Share
+                {t("share")}
             </h3>
             <ul className="flex justify-center items-center space-x-7">
                 <li>
                     <a
                         href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                            `Check out my battle on WarWordly \n\n${battleURL}`
+                            `${t("shareTweet")} \n\n${battleURL}`
                         )}`}
                         rel="noreferrer"
                         target="_blank"
@@ -95,7 +103,7 @@ export default function ShareBattle({ battleId, imageURL }) {
                         >
                             <div className="inline-block align-bottom bg-white rounded-xl px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all w-full sm:my-8 sm:align-middle sm:max-w-xl sm:p-6">
                                 <h4 className="text-center text-xl mb-5 text-gray-700 font-bold">
-                                    Share with your friends
+                                    {t("shareWithFriends")}
                                 </h4>
                                 {battleId && imageURL && (
                                     <img
@@ -116,7 +124,7 @@ export default function ShareBattle({ battleId, imageURL }) {
                                         download="battle.jpg"
                                     >
                                         <PhotographIcon className="w-6 h-6 mr-3" />
-                                        Download Image
+                                        {t("downloadImage")}
                                     </a>
                                     <CopyToClipboard
                                         text={battleURL}
@@ -135,12 +143,12 @@ export default function ShareBattle({ battleId, imageURL }) {
                                             {copiedToClipboard ? (
                                                 <>
                                                     <ClipboardCheckIcon className="w-6 h-6 mr-3" />
-                                                    Copied Link
+                                                    {t("copiedLink")}
                                                 </>
                                             ) : (
                                                 <>
                                                     <LinkIcon className="w-6 h-6 mr-3" />
-                                                    Copy Link
+                                                    {t("copyLink")}
                                                 </>
                                             )}
                                         </button>

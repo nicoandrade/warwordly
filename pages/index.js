@@ -19,6 +19,8 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 export default function Home() {
     const router = useRouter();
 
+    const { locale: activeLocale } = router;
+
     const [message, setMessage] = useState("");
 
     const { user } = useUser();
@@ -34,10 +36,12 @@ export default function Home() {
         if (user) {
             // If the user is already logged in, we create the new battle
             try {
-                const solution = getWordSolution();
+                const solution = await getWordSolution(activeLocale);
+
                 const dataToInsert = {
                     player1: user.id,
                     solution: solution,
+                    language: activeLocale,
                 };
 
                 const { data, error } = await supabase

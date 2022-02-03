@@ -1,14 +1,22 @@
 import { useState } from "react";
 
+import { useRouter } from "next/router";
+
 import Logo from "components/Logo";
 import Spin from "components/Spin";
 import { DuplicateIcon, ClipboardCheckIcon } from "@heroicons/react/solid";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-export default function WaitingForOpponent({ battleId }) {
+export default function WaitingForOpponent({ battleId, battleLanguage }) {
+    const router = useRouter();
+
+    const { defaultLocale } = router;
+
     const [copiedToClipboard, setCopiedToClipboard] = useState(false);
 
-    const url = `${process.env.NEXT_PUBLIC_SITE_URL}/battles/${battleId}`;
+    const url = `${process.env.NEXT_PUBLIC_SITE_URL}${
+        battleLanguage === defaultLocale ? "" : `/${battleLanguage}`
+    }/battles/${battleId}`;
 
     return (
         <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
