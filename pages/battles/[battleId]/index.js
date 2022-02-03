@@ -376,8 +376,6 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps = async ({ locale }) => {
-    console.log("LOCALE: ", locale);
-
     let i18n;
     try {
         i18n = await serverSideTranslations(locale, ["common", "battle"]);
