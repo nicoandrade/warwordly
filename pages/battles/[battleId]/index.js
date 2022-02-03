@@ -95,19 +95,19 @@ export default function Battle() {
             }, 2000);
         }
 
-        try {
-            if (
-                false ===
-                (await isWordInWordList(currentGuess, battle.language))
-            ) {
-                setIsWordNotFoundAlertOpen(true);
-                return setTimeout(() => {
-                    setIsWordNotFoundAlertOpen(false);
-                }, 2000);
-            }
-        } catch (error) {
-            console.log(error);
-        }
+        // try {
+        //     if (
+        //         false ===
+        //         (await isWordInWordList(currentGuess, battle.language))
+        //     ) {
+        //         setIsWordNotFoundAlertOpen(true);
+        //         return setTimeout(() => {
+        //             setIsWordNotFoundAlertOpen(false);
+        //         }, 2000);
+        //     }
+        // } catch (error) {
+        //     console.log(error);
+        // }
 
         // Checks if the current word is the solution in the DB
         const winningWord = battle.solution === currentGuess;
@@ -264,9 +264,6 @@ export default function Battle() {
         };
     }, [battleId]);
 
-    if (router.isFallback) {
-        return "";
-    }
     return (
         <div>
             <Header />
