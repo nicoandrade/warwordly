@@ -375,8 +375,11 @@ export async function getStaticPaths() {
     return { paths: [], fallback: true };
 }
 
-export const getStaticProps = async ({ locale }) => ({
-    props: {
-        ...(await serverSideTranslations(locale, ["common", "battle"])),
-    },
-});
+export const getStaticProps = async ({ locale }) => {
+    console.log("LOCALE: ", locale);
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, ["common", "battle"])),
+        },
+    };
+};
