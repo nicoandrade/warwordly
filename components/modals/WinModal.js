@@ -108,6 +108,7 @@ export default function WinModal({
                             <div className="mt-5 sm:mt-6">
                                 <Link
                                     href={`${process.env.NEXT_PUBLIC_SITE_URL}/battles/${battleId}/results`}
+                                    prefetch={false}
                                 >
                                     <a className="btn btn-hero">Results</a>
                                 </Link>
