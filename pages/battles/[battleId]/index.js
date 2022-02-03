@@ -386,4 +386,5 @@ export const getStaticProps = async ({ locale }) => ({
     props: {
         ...(await serverSideTranslations(locale, ["common", "battle"])),
     },
+    revalidate: 600, // This page content will be updated every 600 sec (10 min)
 });
