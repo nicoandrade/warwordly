@@ -33,6 +33,10 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 export default function Battle() {
     const router = useRouter();
 
+    if (router.isFallback) {
+        return "";
+    }
+
     // Gets the Battle ID from the URL
     const { battleId } = router.query;
 
@@ -379,9 +383,7 @@ export default function Battle() {
 
 // This function gets called at build time
 export async function getStaticPaths() {
-    const paths = [];
-    // We'll pre-render only these paths at build time.
-    return { paths, fallback: true };
+    return { paths: [], fallback: true };
 }
 
 export const getStaticProps = async ({ locale }) => ({
