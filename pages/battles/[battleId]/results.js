@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import Header from "components/Header";
 import Footer from "components/Footer";
@@ -178,6 +179,12 @@ export default function BattleResults({ battle }) {
             </div>
 
             <ShareBattle battleId={battleId} imageURL={ogUrl} />
+
+            <div className="max-w-lg mx-auto px-4 sm:px-6 lg:px-8 mb-10 flex justify-center mt-12">
+                <Link href="/">
+                    <a className="btn w-full">New Battle</a>
+                </Link>
+            </div>
 
             <Footer />
         </div>
