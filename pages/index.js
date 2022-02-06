@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import { useRouter } from "next/router";
 
+import Image from "next/image";
+
 import Logo from "components/Logo";
 import Header from "components/Header";
 import Footer from "components/Footer";
@@ -77,7 +79,7 @@ export default function Home() {
                 </p>
             </div>
 
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mb-48">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mb-36">
                 <div className="flex justify-center mb-5">
                     <button
                         type="button"
@@ -102,6 +104,21 @@ export default function Home() {
                         <SimpleMessage title={message} />
                     </div>
                 )}
+
+                <div className="flex justify-center mt-20">
+                    <a
+                        href="https://www.producthunt.com/posts/warwordly?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-warwordly"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <Image
+                            src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=330198&theme=light&period=daily"
+                            width={250}
+                            height={54}
+                            alt="WarWordly - Play Wordle against a friend | Product Hunt"
+                        />
+                    </a>
+                </div>
             </div>
 
             <Footer />
