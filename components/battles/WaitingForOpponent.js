@@ -4,11 +4,16 @@ import { useRouter } from "next/router";
 
 import Logo from "components/Logo";
 import Spin from "components/Spin";
+import ShareNewBattle from "./ShareNewBattle";
 import { DuplicateIcon, ClipboardCheckIcon } from "@heroicons/react/solid";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
+import { useTranslation } from "next-i18next";
+
 export default function WaitingForOpponent({ battleId, battleLanguage }) {
     const router = useRouter();
+
+    const { t } = useTranslation(["battle", "common"]);
 
     const { defaultLocale } = router;
 
@@ -22,9 +27,9 @@ export default function WaitingForOpponent({ battleId, battleLanguage }) {
         <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
             <h1 className="flex items-center text-2xl font-bold text-amber-600 mb-5">
                 <Logo className=" w-auto h-6 mr-4" logoMinimal={true} />
-                New Battle
+                {t("newBattle", { ns: "common" })}
             </h1>
-            <p className="text-lg mb-4">Share this link with your opponent</p>
+            <p className="text-lg mb-4">{t("shareWithOpponent")}</p>
             <div className="flex items-center mb-8">
                 <div className="py-4 px-5 h-12 bg-gray-100 rounded-md text-xs truncate mr-3 select-all font-mono">
                     {url}
@@ -51,12 +56,16 @@ export default function WaitingForOpponent({ battleId, battleLanguage }) {
                 </CopyToClipboard>
             </div>
 
+            <ShareNewBattle url={url} />
+
             <div className="flex items-center justify-center mb-3">
                 <div className="flex items-center justify-center p-4 bg-gray-50 rounded-full">
                     <Spin className="w-12 h-12 text-gray-400" />
                 </div>
             </div>
-            <h2 className="text-center text-gray-400">Waiting for opponent</h2>
+            <h2 className="text-center text-gray-400">
+                {t("waitingOpponent")}
+            </h2>
         </div>
     );
 }

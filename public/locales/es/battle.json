@@ -21,5 +21,8 @@
     "downloadImage": "Descargar Imagen",
     "copyLink": "Copiar Link",
     "copiedLink": "Link Copiado",
-    "shareTweet": "Mirá mi batalla en WarWordly"
+    "shareTweet": "Mirá mi batalla en WarWordly",
+    "sendLink": "Enviar Link",
+    "shareWithOpponent": "Enviá este link a tu oponente",
+    "waitingOpponent": "Esperando oponente"
 }
