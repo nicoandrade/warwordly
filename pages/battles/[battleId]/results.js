@@ -8,6 +8,7 @@ import Footer from "components/Footer";
 
 import ResultsColumnSkeleton from "components/results/ResultsColumnSkeleton";
 import ShareBattle from "components/results/ShareBattle";
+import TipybitButton from "components/TipybitButton";
 
 import ResultsColumn from "components/results/ResultsColumn";
 
@@ -191,6 +192,15 @@ export default function BattleResults({ battle }) {
                         {t("newBattle", { ns: "common" })}
                     </a>
                 </Link>
+            </div>
+
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+                <p className="text-center mb-5 text-sm">
+                    {t("ifEnjoy", { ns: "common" })}
+                </p>
+                <div className="flex justify-center mb-5">
+                    <TipybitButton />
+                </div>
             </div>
 
             <Footer />
