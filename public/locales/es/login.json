@@ -4,5 +4,6 @@
     "description": "Te enviaremos un email con un magic link para ingresar.",
     "sendMagicLink": "Enviar Magic Link",
     "responseSentTitle": "Magic Link enviado, revisá tu email",
-    "responseSentMessage": "Revisá la carpeta de SPAM si es necesario."
+    "responseSentMessage": "Revisá la carpeta de SPAM si es necesario.",
+    "orLoginWith": "O ingresá con"
 }

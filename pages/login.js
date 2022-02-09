@@ -15,6 +15,8 @@ import { NextSeo } from "next-seo";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
+import { supabase } from "libs/initSupabase";
+
 export default function Login() {
     const router = useRouter();
 
@@ -26,6 +28,13 @@ export default function Login() {
 
     const [formLoading, setFormLoading] = useState(false);
     const [message, setMessage] = useState({
+        messageShow: false,
+        messageType: "loading",
+        messageTitle: "",
+        message: "",
+    });
+
+    const [messageSocial, setMessageSocial] = useState({
         messageShow: false,
         messageType: "loading",
         messageTitle: "",
@@ -71,6 +80,24 @@ export default function Login() {
                 messageTitle: message,
             });
             setFormLoading(false);
+        }
+    };
+
+    const handleTwitterLogin = async (e) => {
+        e.preventDefault();
+
+        try {
+            const { user, session, error } = await supabase.auth.signIn({
+                provider: "twitter",
+            });
+            if (error) throw error;
+        } catch (error) {
+            const message = error.error_description || error.message;
+            setMessageSocial({
+                messageShow: true,
+                messageType: "error",
+                messageTitle: message,
+            });
         }
     };
 
@@ -142,6 +169,43 @@ export default function Login() {
                             />
                         )}
                     </form>
+
+                    <div className="mt-5">
+                        <div className="relative">
+                            <div className="absolute inset-0 flex items-center">
+                                <div className="w-full border-t border-gray-200" />
+                            </div>
+                            <div className="relative flex justify-center text-sm">
+                                <span className="px-2 bg-white text-gray-500">
+                                    {t("orLoginWith", { ns: "login" })}
+                                </span>
+                            </div>
+                        </div>
+                        <div className="mt-5">
+                            <button
+                                type="button"
+                                onClick={handleTwitterLogin}
+                                className="btn w-full text-blue-500 bg-blue-100 hover:text-blue-700 hover:bg-blue-200"
+                            >
+                                <svg
+                                    fill="currentColor"
+                                    viewBox="0 0 24 24"
+                                    className="w-6 h-6 mr-2"
+                                >
+                                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                                </svg>
+                                Twitter
+                            </button>
+
+                            {messageSocial.messageShow && (
+                                <Message
+                                    title={messageSocial.messageTitle}
+                                    message={messageSocial.message}
+                                    type={messageSocial.messageType}
+                                />
+                            )}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

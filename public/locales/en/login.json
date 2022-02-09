@@ -4,5 +4,6 @@
     "description": "We will email you a magic sign in link.",
     "sendMagicLink": "Send Magic Link",
     "responseSentTitle": "Magic Link sent, check your email",
-    "responseSentMessage": "Check your SPAM folder if necessary."
+    "responseSentMessage": "Check your SPAM folder if necessary.",
+    "orLoginWith": "Or login with"
 }
