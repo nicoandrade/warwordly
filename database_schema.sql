@@ -25,6 +25,7 @@ CREATE TABLE "battles"(
     "language" VARCHAR(7) DEFAULT 'en',
     "amount_letters" INTEGER DEFAULT 5,
     "amount_guesses" INTEGER DEFAULT 6,
+    "next_id" UUID DEFAULT extensions.uuid_generate_v4(),
     "created_at" TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
     "updated_at" TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
     "status" battle_status DEFAULT 'pending'::public.battle_status

@@ -34,25 +34,25 @@ const Message = ({ title, type = "error", message }) => {
                         {
                             error: (
                                 <XCircleIcon
-                                    className="h-5 w-5 text-red-600"
+                                    className="h-6 w-6 text-red-600"
                                     aria-hidden="true"
                                 />
                             ),
                             success: (
                                 <CheckCircleIcon
-                                    className="h-5 w-5 text-emerald-600"
+                                    className="h-6 w-6 text-emerald-600"
                                     aria-hidden="true"
                                 />
                             ),
                             alert: (
                                 <ExclamationIcon
-                                    className="h-5 w-5 text-amber-600"
+                                    className="h-6 w-6 text-amber-600"
                                     aria-hidden="true"
                                 />
                             ),
                             info: (
                                 <InformationCircleIcon
-                                    className="h-5 w-5 text-blue-600"
+                                    className="h-6 w-6 text-blue-600"
                                     aria-hidden="true"
                                 />
                             ),

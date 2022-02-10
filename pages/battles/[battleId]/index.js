@@ -325,6 +325,7 @@ export default function Battle() {
                             onDelete={onDelete}
                             onEnter={onEnter}
                             guesses={guesses}
+                            locale={battle.language}
                         />
                     )}
 

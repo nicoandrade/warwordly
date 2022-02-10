@@ -2,7 +2,13 @@ import { getStatuses } from "libs/statuses";
 import Key from "./Key";
 import { useEffect } from "react";
 
-export default function Keyboard({ onChar, onDelete, onEnter, guesses }) {
+export default function Keyboard({
+    onChar,
+    onDelete,
+    onEnter,
+    guesses,
+    locale = "en",
+}) {
     const charStatuses = getStatuses(guesses);
 
     const onClick = (value) => {
@@ -23,7 +29,10 @@ export default function Keyboard({ onChar, onDelete, onEnter, guesses }) {
                 onDelete();
             } else {
                 const key = e.key.toUpperCase();
-                if (key.length === 1 && key >= "A" && key <= "Z") {
+                if (
+                    key.length === 1 &&
+                    ((key >= "A" && key <= "Z") || "Ñ" == key)
+                ) {
                     onChar(key);
                 }
             }
@@ -58,6 +67,13 @@ export default function Keyboard({ onChar, onDelete, onEnter, guesses }) {
                 <Key value="J" onClick={onClick} status={charStatuses["J"]} />
                 <Key value="K" onClick={onClick} status={charStatuses["K"]} />
                 <Key value="L" onClick={onClick} status={charStatuses["L"]} />
+                {"es" === locale && (
+                    <Key
+                        value="Ñ"
+                        onClick={onClick}
+                        status={charStatuses["Ñ"]}
+                    />
+                )}
             </div>
             <div className="flex justify-center space-x-1">
                 <Key value="DELETE" onClick={onClick}>

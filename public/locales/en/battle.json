@@ -24,5 +24,7 @@
     "shareTweet": "Check out my battle on WarWordly",
     "sendLink": "Send Link",
     "shareWithOpponent": "Share this link with your opponent",
-    "waitingOpponent": "Waiting for opponent"
+    "waitingOpponent": "Waiting for opponent",
+    "playAgain": "Play again",
+    "battleNotEnded": "Battle not ended yet"
 }
