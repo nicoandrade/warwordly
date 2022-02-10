@@ -83,12 +83,12 @@ export default function Login() {
         }
     };
 
-    const handleTwitterLogin = async (e) => {
+    const handleSocialLogin = async (e, provider) => {
         e.preventDefault();
 
         try {
             const { user, session, error } = await supabase.auth.signIn({
-                provider: "twitter",
+                provider: provider,
             });
             if (error) throw error;
         } catch (error) {
@@ -181,10 +181,10 @@ export default function Login() {
                                 </span>
                             </div>
                         </div>
-                        <div className="mt-5">
+                        <div className="mt-5 space-y-3">
                             <button
                                 type="button"
-                                onClick={handleTwitterLogin}
+                                onClick={(e) => handleSocialLogin(e, "twitter")}
                                 className="btn w-full text-blue-500 bg-blue-100 hover:text-blue-700 hover:bg-blue-200"
                             >
                                 <svg
@@ -195,6 +195,24 @@ export default function Login() {
                                     <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
                                 </svg>
                                 Twitter
+                            </button>
+
+                            <button
+                                type="button"
+                                onClick={(e) =>
+                                    handleSocialLogin(e, "facebook")
+                                }
+                                className="btn w-full text-[#1871ed] bg-indigo-100 hover:text-indigo-700 hover:bg-indigo-200"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    className="w-6 h-6 mr-2"
+                                >
+                                    <path d="M17,3H7C4.791,3,3,4.791,3,7v10c0,2.209,1.791,4,4,4h5.621v-6.961h-2.343v-2.725h2.343V9.309 c0-2.324,1.421-3.591,3.495-3.591c0.699-0.002,1.397,0.034,2.092,0.105v2.43h-1.428c-1.13,0-1.35,0.534-1.35,1.322v1.735h2.7 l-0.351,2.725h-2.365V21H17c2.209,0,4-1.791,4-4V7C21,4.791,19.209,3,17,3z" />
+                                </svg>
+                                Facebook
                             </button>
 
                             {messageSocial.messageShow && (
