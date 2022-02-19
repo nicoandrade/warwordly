@@ -326,6 +326,7 @@ export default function Battle() {
                             onEnter={onEnter}
                             guesses={guesses}
                             locale={battle.language}
+                            solution={battle?.solution || ""}
                         />
                     )}
 

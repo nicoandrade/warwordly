@@ -8,8 +8,9 @@ export default function Keyboard({
     onEnter,
     guesses,
     locale = "en",
+    solution,
 }) {
-    const charStatuses = getStatuses(guesses);
+    const charStatuses = getStatuses(guesses, solution);
 
     const onClick = (value) => {
         if (value === "ENTER") {
